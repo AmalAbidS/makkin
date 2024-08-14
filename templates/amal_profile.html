@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أمل عابد - Full Stack Developer</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="static/css/main.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+        }
+        .profile-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #ffffff;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            text-align: center;
+        }
+        .profile-container h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #2A6D6D;
+        }
+        .profile-container h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #2A6D6D;
+            border-bottom: 2px solid #2A6D6D;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        .profile-container p {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+        .profile-container ul {
+            list-style-type: none;
+            padding-right: 0;
+            padding-left: 0;
+        }
+        .profile-container li {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f1f1f1;
+            border-radius: 8px;
+            font-size: 1.1em;
+            position: relative;
+            text-align: right;
+            padding-right: 50px;
+        }
+        .profile-container li i {
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: #2A6D6D;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.4em;
+        }
+        .profile-container .contact-info {
+            margin-bottom: 30px;
+        }
+        .profile-container .contact-info a {
+            color: #2A6D6D;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px;
+            font-size: 1.2em;
+        }
+        .profile-container .contact-info a:hover {
+            text-decoration: underline;
+        }
+        .profile-container .contact-info i {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header id="header" class="header d-flex align-items-center sticky-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+            <a href="{{ url_for('index') }}" class="logo d-flex align-items-center me-auto">
+                <img src="{{ url_for('static', filename='images/Makkin.png') }}" class="logo">
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="{{ url_for('index') }}#hero" class="active">الرئيسية</a></li>
+                    <li><a href="{{ url_for('index') }}#about">عن مكّن </a></li>
+                    <li class="dropdown"><a href="{{ url_for('index') }}#services"><span>خدماتنا</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <ul>
+                            <li><a href="{{ url_for('signup_job_seeker') }}">الباحثين عن العمل</a></li>
+                            <li><a href="{{ url_for('signup_employer') }}">أصحاب الأعمال</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{{ url_for('index') }}#team">فريق العمل</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+
+            <a class="btn-getstarted" href="{{ url_for('login') }}">تسجيل الدخول</a>
+
+        </div>
+    </header>
+
+    <!-- Profile Content -->
+    <div class="profile-container">
+        <h1>أمل عابد</h1>
+        <h2>Full Stack Developer</h2>
+        <p>طالبة بالسنة الأخيرة بقسم علوم الحاسب والذكاء الاصطناعي، بمعدل 3.99 من 4</p>
+        
+        <div class="contact-info">
+            <a href="http://linkedin.com/in/amal-abid-70065325b" target="_blank">
+                <i class="fab fa-linkedin"></i> لينكدان
+            </a>
+            <a href="mailto:Amlabidsaeed@gmail.com">
+                <i class="fas fa-envelope"></i> البريد الإلكتروني
+            </a>
+        </div>
+
+        <h2>الإنجازات:</h2>
+        <ul>
+            <li><i class="fas fa-trophy"></i> حاصلة على المركز الأول في تطوير منصة باستخدام مفاهيم البرمجة كائنية التوجه باستخدام البايثون ضمن معسكر رؤية الرقمي.</li>
+            <li><i class="fas fa-users"></i> عضوة فعالة بالأندية الطلابية: نادي الحاسبات، قوقل، وكبتار.</li>
+            <li><i class="fas fa-users-cog"></i> قائدة فريق بإحدى مبادرات نادي قوقل الطلابي.</li>
+        </ul>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

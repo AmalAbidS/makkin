@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>تسجيل الدخول</title>
+  <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+</head>
+<body>
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+      <a href="{{ url_for('index') }}" class="logo d-flex align-items-center me-auto">
+        <img src="{{ url_for('static', filename='images/Makkin.png') }}" class="logo">
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{{ url_for('index') }}#hero" class="active">الرئيسية</a></li>
+          <li><a href="{{ url_for('index') }}#about">عن مكّن</a></li>
+          <li class="dropdown"><a href="{{ url_for('index') }}#services"><span>خدماتنا</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="{{ url_for('job_seekers_dashboard') }}">الباحثين عن العمل</a></li>
+              <li><a href="{{ url_for('employer_dashboard') }}">أصحاب الأعمال</a></li>
+            </ul>
+          </li>
+          <li><a href="{{ url_for('index') }}#team">فريق العمل</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      {% if 'user_id' in session %}
+      <a class="btn-getstarted" href="{{ url_for('logout') }}">تسجيل الخروج</a>
+      {% else %}
+      <a class="btn-getstarted" href="{{ url_for('login') }}">تسجيل الدخول</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <main class="main">
+    <section id="login" class="login section py-5">
+      <div class="container" data-aos="fade-up">
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <div class="card p-4 shadow">
+              <div class="text-center">
+                <i class="bi bi-person-circle icon" style="font-size: 50px;"></i>
+              </div>
+              <h2 class="text-center mb-4">تسجيل الدخول</h2>
+              {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                  {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} text-center">{{ message }}</div>
+                  {% endfor %}
+                {% endif %}
+              {% endwith %}
+              <form action="{{ url_for('login') }}" method="POST">
+                <div class="mb-3">
+                  <label for="email" class="form-label">البريد الإلكتروني</label>
+                  <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">كلمة المرور</label>
+                  <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="d-grid gap-2">
+                  <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
+                </div>
+              </form>
+              <div class="mt-3 text-center">
+                <a href="{{ url_for('signup_employer') }}">إنشاء حساب جديد كصاحب عمل</a>
+                <br>
+                <a href="{{ url_for('signup_job_seeker') }}">إنشاء حساب جديد كباحث عن عمل</a>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer" class="footer position-relative">
+    <div class="container text-center">
+      <div class="copyright">
+        &copy; حقوق النشر <strong><span>مكّن</span></strong>. جميع الحقوق محفوظة
+      </div>
+    </div>
+  </footer>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>

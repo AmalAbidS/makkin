@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>الملف الشخصي للباحث عن عمل</title>
+  <link href="{{ url_for('static', filename='img/favicon.png') }}" rel="icon">
+  <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+</head>
+<body>
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+      <a href="{{ url_for('index') }}" class="logo d-flex align-items-center me-auto">
+        <img src="{{ url_for('static', filename='images/Makkin.png') }}" class="logo">
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{{ url_for('index') }}#hero" class="active">الرئيسية</a></li>
+          <li><a href="{{ url_for('index') }}#about">عن مكّن</a></li>
+          <li class="dropdown"><a href="{{ url_for('index') }}#services"><span>خدماتنا</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="{{ url_for('job_seekers_dashboard') }}">الباحثين عن العمل</a></li>
+              <li><a href="{{ url_for('employer_dashboard') }}">أصحاب الأعمال</a></li>
+            </ul>
+          </li>
+          <li><a href="{{ url_for('index') }}#team">فريق العمل</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <section id="profile" class="profile section py-5">
+      <div class="container" data-aos="fade-up">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="card p-4 shadow">
+              <h2 class="text-center mb-4">تحديث الملف الشخصي</h2>
+              {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                  {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} text-center">{{ message }}</div>
+                  {% endfor %}
+                {% endif %}
+              {% endwith %}
+              <form action="{{ url_for('job_seeker_profile') }}" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                  <label for="name" class="form-label">الاسم الكامل</label>
+                  <input type="text" class="form-control" id="name" name="name" value="{{ user.name }}" required>
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">البريد الإلكتروني</label>
+                  <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">كلمة المرور</label>
+                  <input type="password" class="form-control" id="password" name="password" placeholder="أدخل كلمة المرور الجديدة إذا كنت ترغب في تغييرها">
+                </div>
+                <div class="mb-3">
+                  <label for="education" class="form-label">المؤهلات العلمية</label>
+                  <input type="text" class="form-control" id="education" name="education" value="{{ user.education }}">
+                </div>
+                <div class="mb-3">
+                  <label for="experience" class="form-label">الخبرات</label>
+                  <input type="text" class="form-control" id="experience" name="experience" value="{{ user.experience }}">
+                </div>
+                <div class="mb-3">
+                  <label for="skills" class="form-label">المهارات</label>
+                  <div id="skillsContainer">
+                    {% for skill in user.skills.split(',') %}
+                      <div class="skill-item">
+                        <input type="text" name="skills[]" class="form-control" value="{{ skill }}">
+                        <button type="button" class="btn btn-danger btn-sm ms-2" onclick="removeSkill(this)">حذف</button>
+                      </div>
+                    {% endfor %}
+                  </div>
+                  <button type="button" class="btn btn-secondary" onclick="addSkill()">إضافة مهارة</button>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="major" class="form-label"><i class="bi bi-book-fill icon"></i> التخصص</label>
+                  <select class="form-control select2" id="major" name="major" required>
+                    <option value="">اختر التخصص</option>
+                    <option value="الهندسة المدنية" {% if user.major == 'الهندسة المدنية' %}selected{% endif %}>الهندسة المدنية</option>
+                    <option value="الهندسة الميكانيكية" {% if user.major == 'الهندسة الميكانيكية' %}selected{% endif %}>الهندسة الميكانيكية</option>
+                    <option value="الهندسة الكهربائية" {% if user.major == 'الهندسة الكهربائية' %}selected{% endif %}>الهندسة الكهربائية</option>
+                    <option value="الهندسة الكيميائية" {% if user.major == 'الهندسة الكيميائية' %}selected{% endif %}>الهندسة الكيميائية</option>
+                    <option value="الهندسة المعمارية" {% if user.major == 'الهندسة المعمارية' %}selected{% endif %}>الهندسة المعمارية</option>
+                    <option value="هندسة الحاسوب" {% if user.major == 'هندسة الحاسوب' %}selected{% endif %}>هندسة الحاسوب</option>
+                    <option value=" الذكاء الاصطناعي" {% if user.major == 'الذكاء الاصطناعي' %}selected{% endif %}>الذكاء الاصطناعي</option>
+                    <option value="علوم الحاسب" {% if user.major == 'علوم الحاسب' %}selected{% endif %}>علوم الحاسب</option>
+                    <option value="تقنية المعلومات" {% if user.major == 'تقنية المعلومات' %}selected{% endif %}>تقنية المعلومات</option>
+                    <option value="نظم المعلومات" {% if user.major == 'نظم المعلومات' %}selected{% endif %}>نظم المعلومات</option>
+                    <option value="الأمن السيبراني" {% if user.major == 'الأمن السيبراني' %}selected{% endif %}>الأمن السيبراني</option>
+                    <option value="الطب البشري" {% if user.major == 'الطب البشري' %}selected{% endif %}>الطب البشري</option>
+                    <option value="طب الأسنان" {% if user.major == 'طب الأسنان' %}selected{% endif %}>طب الأسنان</option>
+                    <option value="الصيدلة" {% if user.major == 'الصيدلة' %}selected{% endif %}>الصيدلة</option>
+                    <option value="العلوم الطبية التطبيقية" {% if user.major == 'العلوم الطبية التطبيقية' %}selected{% endif %}>العلوم الطبية التطبيقية</option>
+                    <option value="التمريض" {% if user.major == 'التمريض' %}selected{% endif %}>التمريض</option>
+                    <option value="العلوم البيئية" {% if user.major == 'العلوم البيئية' %}selected{% endif %}>العلوم البيئية</option>
+                    <option value="الفيزياء" {% if user.major == 'الفيزياء' %}selected{% endif %}>الفيزياء</option>
+                    <option value="الكيمياء" {% if user.major == 'الكيمياء' %}selected{% endif %}>الكيمياء</option>
+                    <option value="الأحياء" {% if user.major == 'الأحياء' %}selected{% endif %}>الأحياء</option>
+                    <option value="الرياضيات" {% if user.major == 'الرياضيات' %}selected{% endif %}>الرياضيات</option>
+                    <option value="الإحصاء" {% if user.major == 'الإحصاء' %}selected{% endif %}>الإحصاء</option>
+                    <option value="الاقتصاد" {% if user.major == 'الاقتصاد' %}selected{% endif %}>الاقتصاد</option>
+                    <option value="إدارة الأعمال" {% if user.major == 'إدارة الأعمال' %}selected{% endif %}>إدارة الأعمال</option>
+                    <option value="المحاسبة" {% if user.major == 'المحاسبة' %}selected{% endif %}>المحاسبة</option>
+                    <option value="التسويق" {% if user.major == 'التسويق' %}selected{% endif %}>التسويق</option>
+                    <option value="التمويل" {% if user.major == 'التمويل' %}selected{% endif %}>التمويل</option>
+                    <option value="إدارة الموارد البشرية" {% if user.major == 'إدارة الموارد البشرية' %}selected{% endif %}>إدارة الموارد البشرية</option>
+                    <option value="العلوم السياسية" {% if user.major == 'العلوم السياسية' %}selected{% endif %}>العلوم السياسية</option>
+                    <option value="العلاقات الدولية" {% if user.major == 'العلاقات الدولية' %}selected{% endif %}>العلاقات الدولية</option>
+                    <option value="القانون" {% if user.major == 'القانون' %}selected{% endif %}>القانون</option>
+                    <option value="الشريعة الإسلامية" {% if user.major == 'الشريعة الإسلامية' %}selected{% endif %}>الشريعة الإسلامية</option>
+                    <option value="اللغة الإنجليزية" {% if user.major == 'اللغة الإنجليزية' %}selected{% endif %}>اللغة الإنجليزية</option>
+                    <option value="اللغة العربية" {% if user.major == 'اللغة العربية' %}selected{% endif %}>اللغة العربية</option>
+                    <option value="التاريخ" {% if user.major == 'التاريخ' %}selected{% endif %}>التاريخ</option>
+                    <option value="الجغرافيا" {% if user.major == 'الجغرافيا' %}selected{% endif %}>الجغرافيا</option>
+                    <option value="علم النفس" {% if user.major == 'علم النفس' %}selected{% endif %}>علم النفس</option>
+                    <option value="الاجتماع" {% if user.major == 'الاجتماع' %}selected{% endif %}>الاجتماع</option>
+                    <option value="الخدمة الاجتماعية" {% if user.major == 'الخدمة الاجتماعية' %}selected{% endif %}>الخدمة الاجتماعية</option>
+                    <option value="التربية" {% if user.major == 'التربية' %}selected{% endif %}>التربية</option>
+                    <option value="الإعلام" {% if user.major == 'الإعلام' %}selected{% endif %}>الإعلام</option>
+                    <option value="الاتصال" {% if user.major == 'الاتصال' %}selected{% endif %}>الاتصال</option>
+                    <option value="العمارة" {% if user.major == 'العمارة' %}selected{% endif %}>العمارة</option>
+                    <option value="التصميم الداخلي" {% if user.major == 'التصميم الداخلي' %}selected{% endif %}>التصميم الداخلي</option>
+                    <option value="الفنون البصرية" {% if user.major == 'الفنون البصرية' %}selected{% endif %}>الفنون البصرية</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="gender" class="form-label">الجنس</label>
+                  <select class="form-control" id="gender" name="gender">
+                    <option value="male" {% if user.gender == 'male' %}selected{% endif %}>ذكر</option>
+                    <option value="female" {% if user.gender == 'female' %}selected{% endif %}>أنثى</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="nationalId" class="form-label">رقم الهوية</label>
+                  <input type="text" class="form-control" id="nationalId" name="nationalId" value="{{ user.national_id }}">
+                </div>
+                <div class="mb-3">
+                  <label for="birthdate" class="form-label">تاريخ الميلاد</label>
+                  <input type="date" class="form-control" id="birthdate" name="birthdate" value="{{ user.birthdate }}">
+                </div>
+                <div class="mb-3">
+                  <label for="maritalStatus" class="form-label">الحالة الاجتماعية</label>
+                  <select class="form-control" id="maritalStatus" name="maritalStatus">
+                    <option value="single" {% if user.marital_status == 'single' %}selected{% endif %}>أعزب</option>
+                    <option value="married" {% if user.marital_status == 'married' %}selected{% endif %}>متزوج</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="employmentStatus" class="form-label">الحالة الوظيفية</label>
+                  <select class="form-control" id="employmentStatus" name="employmentStatus">
+                    <option value="employed" {% if user.employment_status == 'employed' %}selected{% endif %}>موظف</option>
+                    <option value="unemployed" {% if user.employment_status == 'unemployed' %}selected{% endif %}>غير موظف</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="resume" class="form-label">السيرة الذاتية</label>
+                  <input type="file" class="form-control" id="resume" name="resume">
+                  {% if user.resume_path %}
+                    <a href="{{ url_for('static', filename=user.resume_path) }}" target="_blank">عرض السيرة الذاتية الحالية</a>
+                  {% endif %}
+                </div>
+                <div class="d-grid gap-2">
+                  <button type="submit" class="btn btn-primary">تحديث</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer" class="footer position-relative">
+    <div class="container text-center">
+      <div class="copyright">
+        &copy; حقوق النشر <strong><span>مكّن</span></strong>. جميع الحقوق محفوظة
+      </div>
+    </div>
+  </footer>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script>
+    // Function to add a new skill input
+    function addSkill() {
+        var container = document.getElementById('skillsContainer');
+        var skillItem = document.createElement('div');
+        skillItem.classList.add('skill-item');
+        skillItem.innerHTML = '<input type="text" name="skills[]" class="form-control" placeholder="أدخل مهارة"><button type="button" class="btn btn-danger btn-sm ms-2" onclick="removeSkill(this)">حذف</button>';
+        container.appendChild(skillItem);
+    }
+
+    // Function to remove a skill input
+    function removeSkill(button) {
+        var skillItem = button.parentNode;
+        skillItem.parentNode.removeChild(skillItem);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>عرض الاختبارات</title>
+  <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+</head>
+<body>
+  <div class="container py-5">
+    <h2 class="text-center">اختبارات الوظائف</h2>
+    {% if questions %}
+    <form action="{{ url_for('submit_test') }}" method="POST">
+      {% for question in questions %}
+        <div class="mb-4">
+          <h5>{{ question.question_text }}</h5>
+          {% for option in question.options %}
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="{{ question.question_text }}" id="option{{ loop.index }}" value="{{ option }}" required>
+              <label class="form-check-label" for="option{{ loop.index }}">
+                {{ option }}
+              </label>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary">إرسال الاختبار</button>
+    </form>
+    {% else %}
+      <p class="text-center">لا يوجد أسئلة متاحة للاختبار.</p>
+    {% endif %}
+  </div>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>

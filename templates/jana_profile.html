@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ar">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جنى حريري - Full Stack Developer</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600&display=swap" rel="stylesheet">
+  
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+      
+        <!-- Favicons -->
+        <link href="{{ url_for('static', filename='img/favicon.png') }}" rel="icon">
+        <link href="{{ url_for('static', filename='img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+      
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com" rel="preconnect">
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+      
+        <!-- Vendor CSS Files -->
+        <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/aos/aos.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+      
+        <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #ffffff;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #2A6D6D; /* اللون المعدل */
+            text-align: center;
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #2A6D6D; /* اللون المعدل */
+            border-bottom: 2px solid #2A6D6D; /* اللون المعدل */
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        p {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+        ul {
+            list-style-type: none;
+            padding-right: 0;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f1f1f1;
+            border-radius: 8px;
+            font-size: 1.1em;
+            position: relative;
+            text-align: right;
+            padding-right: 50px;
+        }
+        li i {
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: #2A6D6D; /* اللون المعدل */
+            position: absolute;
+            right: 15px; /* تم ضبط المسافة بين الأيقونات والنص */
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.4em; /* تعديل حجم الأيقونة */
+        }
+        .contact-info {
+            margin-bottom: 30px;
+        }
+        .contact-info a {
+            color: #2A6D6D; /* اللون المعدل */
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px;
+            font-size: 1.2em;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        .contact-info i {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+
+
+
+<body>
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="{{ url_for('index') }}" class="logo d-flex align-items-center me-auto">
+        <img src="{{ url_for('static', filename='images/Makkin.png') }}" class="logo">
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{{ url_for('index') }}#hero" class="active">الرئيسية</a></li>
+          <li><a href="{{ url_for('index') }}#about">عن مكّن </a></li>
+
+          <li class="dropdown"><a href="{{ url_for('index') }}#services"><span>خدماتنا</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="{{ url_for('signup_job_seeker') }}">الباحثين عن العمل</a></li>
+              <li><a href="{{ url_for('signup_employer') }}">أصحاب الأعمال</a></li>
+            </ul>
+          </li>
+          <li><a href="{{ url_for('index') }}#team">فريق العمل</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" href="{{ url_for('login') }}">تسجيل الدخول</a>
+
+    </div>
+  </header>
+    <div class="container">
+        <h1>جنى حريري</h1>
+        <h2>Data Analyst</h2>
+        <p>مهتمة بتحليل البيانات والذكاء الاصطناعي</p>
+        
+        <div class="contact-info">
+            <a href="https://www.linkedin.com/in/jana-hariri-3656bb186?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank">
+                <i class="fab fa-linkedin"></i> لينكدان
+            </a>
+            <a href="mailto:jana3hariri@gmail.com">
+                <i class="fas fa-envelope"></i> البريد الإلكتروني
+            </a>
+        </div>
+
+        <h2>الإنجازات:</h2>
+        <ul>
+            <li><i class="fas fa-graduation-cap"></i> حديثة تخرج من قسم علوم الحاسب والذكاء الاصطناعي بمرتبة الشرف الأولى.</li>
+            <li><i class="fas fa-trophy"></i> حاصلة على المركز الثاني على مستوى دول مجلس التعاون الخليجي في مسار البحث العلمي بمجال الامن السيبراني في مسابقة خليجنا قيادة وتمكين</li>
+            <li><i class="fas fa-file-alt"></i> نشر ورقتين علمية في مجلات دولية مختلفة في مجال الذكاء الاصطناعي.</li>
+            <li><i class="fas fa-users"></i> رئيسة نادي الحاسب الآلي سابقا</li>
+        </ul>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>نتيجة تقييم السيرة الذاتية</title>
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Vendor CSS Files -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="static/css/main.css" rel="stylesheet">
+</head>
+
+<body>
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <img src="static/Images/Makkin.png" class="logo">
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html#hero" class="active">الرئيسية</a></li>
+          <li><a href="index.html#about">عن مكّن </a></li>
+          <li class="dropdown"><a href="index.html#services"><span>خدماتنا</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="">الباحثين عن العمل</a></li>
+              <li><a href="">أصحاب الأعمال</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#team">فريق العمل</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <a class="btn-getstarted" href="Login.html">انضم إلينا</a>
+    </div>
+  </header>
+  <main class="main">
+    <section id="cv-evaluation-result" class="cv-evaluation-result section py-5">
+      <div class="container" data-aos="fade-up">
+        <div class="row justify-content-center text-center">
+          <div class="col-lg-8">
+            <h2>نتيجة تقييم السيرة الذاتية</h2>
+            <div class="bot-response">
+              <!-- استخدم |safe لطباعة النص مع التنسيق HTML -->
+              <div>{{ bot_response|safe }}</div>
+            </div>
+            <a href="/" class="btn btn-primary">ارفع سيرة ذاتية أخرى</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer id="footer" class="footer position-relative">
+    <div class="container text-center">
+      <div class="copyright">
+        &copy; حقوق النشر <strong><span>مكّن </span></strong>. جميع الحقوق محفوظة
+      </div>
+    </div>
+  </footer>
+  <!-- Vendor JS Files -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

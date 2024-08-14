@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>الترشيحات والنتائج - الباحث عن عمل</title>
+  <link href="{{ url_for('static', filename='img/favicon.png') }}" rel="icon">
+  <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+</head>
+<body>
+  <main class="main">
+    <header id="header" class="header d-flex align-items-center sticky-top">
+      <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+        <a href="{{ url_for('index') }}" class="logo d-flex align-items-center me-auto">
+          <img src="{{ url_for('static', filename='images/Makkin.png') }}" class="logo">
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="{{ url_for('index') }}#hero" class="active">الرئيسية</a></li>
+            <li><a href="{{ url_for('index') }}#about">عن مكّن</a></li>
+            <li class="dropdown"><a href="{{ url_for('index') }}#services"><span>خدماتنا</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <li><a href="{{ url_for('job_seekers_dashboard') }}">الباحثين عن العمل</a></li>
+                <li><a href="{{ url_for('employer_dashboard') }}">أصحاب الأعمال</a></li>
+              </ul>
+            </li>
+            <li><a href="{{ url_for('index') }}#team">فريق العمل</a></li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+        <a class="btn-getstarted" href="{{ url_for('logout') }}">تسجيل الخروج</a>
+
+      </div>
+    </header>
+
+    <!-- Applications and Feedback Section -->
+    <section id="applications-feedback" class="applications-feedback section py-5">
+      <div class="container" data-aos="fade-up">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <h2 class="text-center">الترشيحات والنتائج</h2>
+            <p class="text-center">استعرض الترشيحات والنتائج لتقارير الأداء الخاصة بك.</p>
+
+            <!-- Applications List -->
+            <div class="mb-4">
+              <h4 class="feedback-title">الوظائف التي تم ترشيحك لها:</h4>
+              <ul class="list-group">
+                {% for candidate in candidates %}
+                  <li class="list-group-item">
+                    <i class="bi bi-briefcase icon"></i> {{ candidate.job_title }} في شركة {{ candidate.company_name }}
+                    {% if candidate.test_passed %}
+                      <span class="badge bg-success">ناجح</span>
+                    {% else %}
+                      <span class="badge bg-danger">غير ناجح</span>
+                    {% endif %}
+                    {% if candidate.pdf_report_path %}
+                      <a href="{{ url_for('static', filename=candidate.pdf_report_path) }}" target="_blank" class="btn btn-link">عرض التقرير</a>
+                    {% endif %}
+                    {% if candidate.rejection_comment %}
+                      <p>سبب الرفض: {{ candidate.rejection_comment }}</p>
+                    {% endif %}
+                    
+                    <!-- تقييم المنشأة -->
+                    {% if candidate.hired %}
+                      <form method="POST" action="{{ url_for('applications_feedback') }}" class="mt-3">
+                          <input type="hidden" name="candidate_id" value="{{ candidate.candidate_id }}">
+                          <input type="hidden" name="employer_id" value="{{ candidate.employer_id }}">
+                          <div class="mb-2">
+                            <label for="rating">تقييم المنشأة:</label>
+                            <select name="rating" class="form-select">
+                                <option value="">اختر التقييم</option>
+                                {% for i in range(1, 6) %}
+                                    <option value="{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                          </div>
+                          <textarea name="comments" class="form-control mb-2" placeholder="اكتب تعليقاً"></textarea>
+                          <button type="submit" class="btn btn-primary">حفظ</button>
+                      </form>
+                    {% endif %}
+                    
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section><!-- End Applications and Feedback Section -->
+
+  </main>
+
+  <footer id="footer" class="footer position-relative">
+    <div class="container text-center">
+      <div class="copyright">
+        &copy; حقوق النشر <strong><span>مكّن</span></strong>. جميع الحقوق محفوظة
+      </div>
+    </div>
+  </footer>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+</body>
+
+</html>
